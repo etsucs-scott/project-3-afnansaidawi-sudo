@@ -6,14 +6,14 @@ using System.Linq;
 namespace Minesweeper.Core;
 
 /// <summary>
-/// إدارة الدرجات العالية والملفات
+/// Managing high scores and files
 /// </summary>
 public class HighScoreManager
 {
     private const string FilePath = "data/highscores.csv";
 
     /// <summary>
-    /// درجة عالية واحدة
+    /// A single high score
     /// </summary>
     public class HighScore
     {
@@ -24,7 +24,7 @@ public class HighScoreManager
         public DateTime Timestamp { get; set; }
     }
 
-    // اقرأ كل الدرجات العالية من الملف
+    // Read all high scores from file
     public List<HighScore> LoadScores()
     {
         List<HighScore> scores = new List<HighScore>();
@@ -74,14 +74,14 @@ public class HighScoreManager
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"خطأ في قراءة الملف: {ex.Message}");
+            Console.WriteLine($"Error reading file: {ex.Message}");
             return scores;
         }
 
         return scores;
     }
 
-    // احفظ درجة عالية جديدة
+    // Save a new high score
     public void SaveScore(HighScore score)
     {
         try
@@ -98,11 +98,11 @@ public class HighScoreManager
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"خطأ في الحفظ: {ex.Message}");
+            Console.WriteLine($"Error saving: {ex.Message}");
         }
     }
 
-    // احصل على أفضل 5 درجات لحجم معين
+    // Get top 5 scores for a specific size
     public List<HighScore> GetTop5(int size)
     {
         List<HighScore> allScores = LoadScores();
@@ -117,7 +117,7 @@ public class HighScoreManager
         return topScores;
     }
 
-    // شيك إذا هذه درجة عالية جديدة
+    // Check if this is a new high score
     public bool IsTopScore(HighScore score)
     {
         List<HighScore> topScores = GetTop5(score.Size);

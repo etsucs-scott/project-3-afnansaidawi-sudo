@@ -1,10 +1,10 @@
 using Minesweeper.Core;
 using Xunit;
 
-// اختبارات للعبة Minesweeper
+// Minesweeper game tests
 public class MinesweeperTests
 {
-    // اختبار: اللوحة تُنشأ بالحجم الصحيح
+    // Test: Board is created with correct size
     [Fact]
     public void Board_CreatedWithCorrectSize()
     {
@@ -12,7 +12,7 @@ public class MinesweeperTests
         Assert.Equal(8, board.Size);
     }
 
-    // اختبار: عدد الألغام صحيح
+    // Test: Correct mine count
     [Fact]
     public void Board_CorrectMineCount()
     {
@@ -32,7 +32,7 @@ public class MinesweeperTests
         Assert.Equal(10, mineCount);
     }
 
-    // اختبار: نفس البذرة = نفس الألغام
+    // Test: Same seed = same mines
     [Fact]
     public void Board_SameSeedProducesSameMines()
     {
@@ -53,7 +53,7 @@ public class MinesweeperTests
         }
     }
 
-    // اختبار: بذور مختلفة = ألغام مختلفة (غالباً)
+    // Test: Different seeds = different mines (usually)
     [Fact]
     public void Board_DifferentSeedsProduceDifferentMines()
     {
@@ -76,7 +76,7 @@ public class MinesweeperTests
         Assert.True(minesDifferent);
     }
 
-    // اختبار: حساب الألغام المجاورة
+    // Test: Adjacent mines calculation
     [Fact]
     public void Board_AdjacentMinesCountedCorrectly()
     {
@@ -97,7 +97,7 @@ public class MinesweeperTests
         }
     }
 
-    // اختبار: الكشف المتسلسل يعمل
+    // Test: Cascading reveal works
     [Fact]
     public void Board_CascadeRevealWorksForZeroAdjacentMines()
     {
@@ -143,7 +143,7 @@ public class MinesweeperTests
         }
     }
 
-    // اختبار: الخلايا المعلمة لا تُكشف
+    // Test: Flagged cells cannot be revealed
     [Fact]
     public void Board_FlaggedCellCannotBeRevealed()
     {
@@ -161,7 +161,7 @@ public class MinesweeperTests
         Assert.True(stillUnrevealed);
     }
 
-    // اختبار: الخسارة تُكتشف عند اللغم
+    // Test: Loss detected when mine is hit
     [Fact]
     public void Game_LossDetectedWhenMineHit()
     {
@@ -190,7 +190,7 @@ public class MinesweeperTests
         Assert.False(game.IsWon);
     }
 
-    // اختبار: الأعلام يمكن تبديلها
+    // Test: Flags can be toggled
     [Fact]
     public void Board_FlagCanBeToggled()
     {
@@ -209,7 +209,7 @@ public class MinesweeperTests
         Assert.False(cell?.IsFlagged);
     }
 
-    // اختبار: الفوز يُكتشف
+    // Test: Win detection works
     [Fact]
     public void Game_WinDetectionWorks()
     {
@@ -230,7 +230,7 @@ public class MinesweeperTests
         Assert.True(board.CheckWin());
     }
 
-    // اختبار: لا فوز إذا كانت خلايا مختفية
+    // Test: No win if cells are still hidden
     [Fact]
     public void Game_NotWonIfCellsStillHidden()
     {
@@ -251,7 +251,7 @@ public class MinesweeperTests
         Assert.False(board.CheckWin());
     }
 
-    // اختبار: فحص المواضع الصحيحة
+    // Test: Invalid position detection
     [Fact]
     public void Board_InvalidPositionDetection()
     {
@@ -266,7 +266,7 @@ public class MinesweeperTests
         Assert.False(board.IsValidPosition(10, 10));
     }
 
-    // اختبار: عد الحركات يزيد
+    // Test: Move count increments
     [Fact]
     public void Game_MovesCountIncrement()
     {
@@ -279,7 +279,7 @@ public class MinesweeperTests
         Assert.Equal(3, game.MoveCount);
     }
 
-    // اختبار: الوقت يزيد
+    // Test: Elapsed time increases
     [Fact]
     public void Game_ElapsedTimeIncreases()
     {
@@ -292,7 +292,7 @@ public class MinesweeperTests
         Assert.True(time2 >= time1);
     }
 
-    // اختبار: جميع الأحجام تُنشأ
+    // Test: All sizes can be created
     [Fact]
     public void Board_AllSizesCanBeCreated()
     {
@@ -306,7 +306,7 @@ public class MinesweeperTests
         Assert.Equal(16, board16.Size);
     }
 
-    // اختبار: الكشف مرتين آمن
+    // Test: Revealing a cell twice is safe
     [Fact]
     public void Board_RevealingCellTwiceIsIdempotent()
     {
@@ -333,7 +333,7 @@ public class MinesweeperTests
         }
     }
 
-    // اختبار: عدد الألغام يطابق
+    // Test: Mine count matches
     [Fact]
     public void Game_MineCountMatches()
     {

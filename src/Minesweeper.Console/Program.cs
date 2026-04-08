@@ -9,7 +9,7 @@ class Program
         MainMenu();
     }
 
-    // القائمة الرئيسية
+    // Main menu
     static void MainMenu()
     {
         while (true)
@@ -57,7 +57,7 @@ class Program
         }
     }
 
-    // ابدأ لعبة جديدة بصعوبة معينة
+    // Start a new game with a specific difficulty
     static void PlayGame(int size, int mineCount)
     {
         Console.Clear();
@@ -78,7 +78,7 @@ class Program
         GameLoop(game);
     }
 
-    // اطلب من المستخدم رقم البذرة
+    // Ask the user for a seed number
     static int GetSeed()
     {
         // Prompt the user for a seed
@@ -101,7 +101,7 @@ class Program
         return seedInput.GetHashCode();
     }
 
-    // الحلقة الرئيسية للعبة
+    // Main game loop
     static void GameLoop(Game game)
     {
         // Continue looping until the game is over
@@ -154,7 +154,7 @@ class Program
         Console.ReadKey();
     }
 
-    // اعرض اللوحة الحالية
+    // Display the current board
     static void DisplayBoard(Game game)
     {
         Board board = game.Board;
@@ -190,7 +190,7 @@ class Program
         }
     }
 
-    // احصل على الرمز المناسب لكل خلية
+    // Get the appropriate symbol for each cell
     static string GetCellSymbol(Cell cell)
     {
         // If the cell is flagged, show 'f'
@@ -213,7 +213,7 @@ class Program
         return ".";
     }
 
-    // اطلب منقلة من اللاعب
+    // Get player move
     static void GetPlayerMove(Game game)
     {
         while (true)
@@ -269,7 +269,7 @@ class Program
         }
     }
 
-    // احفظ الدرجة إذا فزنا
+    // Save the score if we won
     static void SaveHighScore(Game game)
     {
         // Create a high score entry
@@ -293,7 +293,7 @@ class Program
         }
     }
 
-    // اعرض الدرجات العالية
+    // Display high scores
     static void ViewHighScores()
     {
         Console.Clear();
@@ -314,7 +314,7 @@ class Program
         Console.ReadKey();
     }
 
-    // اعرض الدرجات لحجم معين
+    // Display scores for a specific size
     static void DisplayScoresForSize(int size, string title, HighScoreManager manager)
     {
         Console.WriteLine($"─────────────────────────────────────");

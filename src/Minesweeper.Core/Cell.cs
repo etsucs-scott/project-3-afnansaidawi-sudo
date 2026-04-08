@@ -3,20 +3,20 @@ using System;
 namespace Minesweeper.Core;
 
 /// <summary>
-/// خلية واحدة في لوحة اللعبة
+/// A single cell in the game board
 /// </summary>
 public class Cell
 {
-    // هل الخلية تحتوي على لغم
+    // Does the cell contain a mine
     public bool IsMine { get; private set; }
 
-    // هل الخلية مكشوفة أم مختفية
+    // Is the cell revealed or hidden
     public bool IsRevealed { get; private set; }
 
-    // هل وضعنا علم على الخلية
+    // Is the cell flagged
     public bool IsFlagged { get; private set; }
 
-    // كم عدد الألغام بجانب هذه الخلية
+    // Number of adjacent mines
     public int AdjacentMines { get; private set; }
 
     public Cell()
@@ -27,31 +27,31 @@ public class Cell
         AdjacentMines = 0;
     }
 
-    // كشف الخلية
+    // Reveal the cell
     public void Reveal()
     {
         IsRevealed = true;
     }
 
-    // ضع أو أزل علم من الخلية
+    // Put or remove a flag from the cell
     public void ToggleFlag()
     {
         IsFlagged = !IsFlagged;
     }
 
-    // ضع لغم في هذه الخلية
+    // Place a mine in this cell
     public void PlaceMine()
     {
         IsMine = true;
     }
 
-    // حدد عدد الألغام المجاورة
+    // Set the number of adjacent mines
     public void SetAdjacentMines(int count)
     {
         AdjacentMines = count;
     }
 
-    // أعد تعيين الخلية
+    // Reset the cell
     public void Reset()
     {
         IsMine = false;

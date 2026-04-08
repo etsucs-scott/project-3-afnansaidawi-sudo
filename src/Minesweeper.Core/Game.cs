@@ -3,22 +3,22 @@ using System;
 namespace Minesweeper.Core;
 
 /// <summary>
-/// إدارة اللعبة والحالة العامة
+/// Game management and general state
 /// </summary>
 public class Game
 {
     public Board Board { get; private set; }
 
-    // هل اللعبة انتهت
+    // Is the game over
     public bool IsGameOver { get; set; }
 
-    // هل فزنا
+    // Did we win
     public bool IsWon { get; set; }
 
-    // كم عدد الحركات اللي عملناها
+    // How many moves we made
     public int MoveCount { get; private set; }
 
-    // وقت البدء
+    // Start time
     public DateTime StartTime { get; private set; }
 
     public Game(int size, int mineCount, int seed)
@@ -32,7 +32,7 @@ public class Game
         StartTime = DateTime.Now;
     }
 
-    // نقل واحد في اللعبة
+    // Make one move in the game
     public bool MakeMove(int row, int col, bool isFlag)
     {
         if (IsGameOver)
@@ -47,16 +47,16 @@ public class Game
         }
         else
         {
-            // كشف الخلية
+            // Reveal the cell
             if (!Board.Reveal(row, col))
             {
-                // اصطدمنا بلغم
+                // We hit a mine
                 IsGameOver = true;
                 Board.RevealAllMines();
                 return false;
             }
 
-            // تفقد إذا فزنا
+            // Check if we won
             if (Board.CheckWin())
             {
                 IsGameOver = true;
@@ -69,14 +69,14 @@ public class Game
         return true;
     }
 
-    // احسب الوقت المنقضي
+    // Calculate elapsed time
     public int GetElapsedTime()
     {
         TimeSpan elapsed = DateTime.Now - StartTime;
         return (int)elapsed.TotalSeconds;
     }
 
-    // احصل على معلومات اللعبة
+    // Get game information
     public string GetStats()
     {
         return $"Moves: {MoveCount} | Time: {GetElapsedTime()}s | Mines: {Board.MineCount}";

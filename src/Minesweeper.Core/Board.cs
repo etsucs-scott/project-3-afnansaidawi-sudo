@@ -3,20 +3,20 @@ using System;
 namespace Minesweeper.Core;
 
 /// <summary>
-/// لوحة اللعبة الرئيسية - تحتوي على الخلايا والألغام
+/// Main game board - contains cells and mines
 /// </summary>
 public class Board
 {
-    // حجم اللوحة (8 أو 12 أو 16)
+    // Size of the board (8 or 12 or 16)
     public int Size { get; private set; }
 
-    // عدد الألغام الكلي
+    // Total number of mines
     public int MineCount { get; private set; }
 
-    // الرقم المستخدم لتوليد الألغام عشوائياً
+    // The number used to generate mines randomly
     public int Seed { get; private set; }
 
-    // جدول يحتوي على جميع الخلايا
+    // Array containing all cells
     private readonly Cell[,] cells;
 
     public Board(int size, int mineCount, int seed)
@@ -25,7 +25,7 @@ public class Board
         MineCount = mineCount;
         Seed = seed;
 
-        // إنشاء جدول فارغ من الخلايا
+        // Create an empty array of cells
         cells = new Cell[size, size];
         for (int row = 0; row < size; row++)
         {
@@ -35,12 +35,12 @@ public class Board
             }
         }
 
-        // وضع الألغام وحساب الأرقام
+        // Place mines and calculate numbers
         PlaceMines();
         CalculateAdjacentMines();
     }
 
-    // وضع الألغام بشكل عشوائي باستخدام البذرة
+    // Place mines randomly using the seed
     private void PlaceMines()
     {
         Random random = new Random(Seed);
@@ -51,7 +51,7 @@ public class Board
             int row = random.Next(Size);
             int col = random.Next(Size);
 
-            // لا نضع لغم إذا كان فيه لغم بالفعل
+            // Don't place a mine if there is already one
             if (!cells[row, col].IsMine)
             {
                 cells[row, col].PlaceMine();
@@ -60,14 +60,14 @@ public class Board
         }
     }
 
-    // حساب كم لغم بجانب كل خلية
+    // Calculate number of mines adjacent to each cell
     private void CalculateAdjacentMines()
     {
         for (int row = 0; row < Size; row++)
         {
             for (int col = 0; col < Size; col++)
             {
-                // لا نحسب للخلايا اللي فيها ألغام
+                // Don't count for cells that have mines
                 if (cells[row, col].IsMine)
                     continue;
 
@@ -77,24 +77,24 @@ public class Board
         }
     }
 
-    // عد الألغام حول خلية معينة
+    // Count mines around a specific cell
     private int CountAdjacentMines(int row, int col)
     {
         int count = 0;
 
-        // تفقد الـ 8 خلايا حول الخلية
+        // Check the 8 surrounding cells
         for (int rOffset = -1; rOffset <= 1; rOffset++)
         {
             for (int cOffset = -1; cOffset <= 1; cOffset++)
             {
-                // تخطي الخلية الحالية
+                // Skip the current cell
                 if (rOffset == 0 && cOffset == 0)
                     continue;
 
                 int newRow = row + rOffset;
                 int newCol = col + cOffset;
 
-                // تفقد الحدود
+                // Check boundaries
                 if (IsValidPosition(newRow, newCol))
                 {
                     if (cells[newRow, newCol].IsMine)
@@ -106,7 +106,7 @@ public class Board
         return count;
     }
 
-    // كشف خلية - إذا لغم = خسرنا
+    // Reveal a cell - if mine = we lose
     public bool Reveal(int row, int col)
     {
         if (!IsValidPosition(row, col))
@@ -114,7 +114,7 @@ public class Board
 
         Cell cell = cells[row, col];
 
-        // لا نكشف لو كانت مُعلّمة
+        // Don't reveal if flagged
         if (cell.IsFlagged)
             return true;
 
@@ -123,11 +123,11 @@ public class Board
 
         cell.Reveal();
 
-        // إذا لغم = خسرنا
+        // If mine = we lose
         if (cell.IsMine)
             return false;
 
-        // إذا لا توجد ألغام بجانبها = كشف ما حول
+        // If there are no adjacent mines = reveal surrounding
         if (cell.AdjacentMines == 0)
         {
             RevealAdjacent(row, col);
@@ -136,7 +136,7 @@ public class Board
         return true;
     }
 
-    // كشف الخلايا حول إذا ما في ألغام
+    // Reveal cells around if no mines
     private void RevealAdjacent(int row, int col)
     {
         for (int rOffset = -1; rOffset <= 1; rOffset++)
@@ -157,7 +157,7 @@ public class Board
                     {
                         adjacentCell.Reveal();
 
-                        // استمر إذا هذي الخلية ما فيها ألغام
+                        // Continue if this cell has no mines
                         if (adjacentCell.AdjacentMines == 0)
                         {
                             RevealAdjacent(newRow, newCol);
@@ -168,7 +168,7 @@ public class Board
         }
     }
 
-    // ضع أو أزل علم من خلية
+    // Put or remove a flag from a cell
     public void ToggleFlag(int row, int col)
     {
         if (!IsValidPosition(row, col))
@@ -176,14 +176,14 @@ public class Board
 
         Cell cell = cells[row, col];
 
-        // لا نعلم الخلايا المكشوفة
+        // Don't flag revealed cells
         if (cell.IsRevealed)
             return;
 
         cell.ToggleFlag();
     }
 
-    // هل فزنا؟ (كل الخلايا اللي ما فيها ألغام مكشوفة)
+    // Did we win? (all non-mine cells are revealed)
     public bool CheckWin()
     {
         for (int row = 0; row < Size; row++)
@@ -200,13 +200,13 @@ public class Board
         return true;
     }
 
-    // شيك إذا الموضع شرعي (على اللوحة)
+    // Check if position is valid (on the board)
     public bool IsValidPosition(int row, int col)
     {
         return row >= 0 && row < Size && col >= 0 && col < Size;
     }
 
-    // احصل على خلية معينة
+    // Get a specific cell
     public Cell? GetCell(int row, int col)
     {
         if (!IsValidPosition(row, col))
@@ -215,7 +215,7 @@ public class Board
         return cells[row, col];
     }
 
-    // كشف كل الألغام (عند الخسارة)
+    // Reveal all mines (on loss)
     public void RevealAllMines()
     {
         for (int row = 0; row < Size; row++)
