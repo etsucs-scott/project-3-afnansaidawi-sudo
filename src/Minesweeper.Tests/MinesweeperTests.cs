@@ -1,18 +1,21 @@
 using Minesweeper.Core;
 using Xunit;
 
-// Minesweeper game tests
+/// <summary>Minesweeper game unit tests for board, game logic, and rules validation.</summary>
 public class MinesweeperTests
 {
-    // Test: Board is created with correct size
-    [Fact]
+    /// <summary>Tests board creation with correct size.</summary>
+    /// <param name="board">Board instance.</param>
+    /// <returns>None (unit test).</returns>    [Fact]
     public void Board_CreatedWithCorrectSize()
     {
         Board board = new Board(8, 10, 42);
         Assert.Equal(8, board.Size);
     }
 
-    // Test: Correct mine count
+    ///// <summary>Tests correct mine count on board.</summary>
+    /// <param name="board">Board instance.</param>
+    /// <returns>None (unit test).</returns>  
     [Fact]
     public void Board_CorrectMineCount()
     {
@@ -32,7 +35,11 @@ public class MinesweeperTests
         Assert.Equal(10, mineCount);
     }
 
-    // Test: Same seed = same mines
+    /// <summary>Tests identical seeds produce identical mine layouts.</summary>
+    /// <param name="board1">First board instance.</param>
+    /// <param name="board2">Second board instance.</param>
+    /// <returns>None (unit test).</returns>
+    
     [Fact]
     public void Board_SameSeedProducesSameMines()
     {
@@ -53,7 +60,11 @@ public class MinesweeperTests
         }
     }
 
-    // Test: Different seeds = different mines (usually)
+    /// <summary>Tests different seeds usually produce different mines.</summary>
+    /// <param name="board1">First board.</param>
+    /// <param name="board2">Second board.</param>
+    /// <returns>None (unit test).</returns>
+    
     [Fact]
     public void Board_DifferentSeedsProduceDifferentMines()
     {
@@ -76,7 +87,9 @@ public class MinesweeperTests
         Assert.True(minesDifferent);
     }
 
-    // Test: Adjacent mines calculation
+    /// <summary>Tests adjacent mine counts are valid.</summary>
+    /// <param name="board">Board instance.</param>
+    /// <returns>None (unit test).</returns>
     [Fact]
     public void Board_AdjacentMinesCountedCorrectly()
     {
@@ -97,7 +110,9 @@ public class MinesweeperTests
         }
     }
 
-    // Test: Cascading reveal works
+    /// <summary>Tests cascade reveal when zero-adjacent-mine cell is opened.</summary>
+    /// <param name="board">Board instance.</param>
+    /// <returns>None (unit test).</returns>
     [Fact]
     public void Board_CascadeRevealWorksForZeroAdjacentMines()
     {
@@ -143,7 +158,9 @@ public class MinesweeperTests
         }
     }
 
-    // Test: Flagged cells cannot be revealed
+    /// <summary>Tests loss condition when mine is revealed.</summary>
+    /// <param name="game">Game instance.</param>
+    /// <returns>None (unit test).</returns>
     [Fact]
     public void Board_FlaggedCellCannotBeRevealed()
     {
@@ -190,7 +207,9 @@ public class MinesweeperTests
         Assert.False(game.IsWon);
     }
 
-    // Test: Flags can be toggled
+    /// <summary>Tests flag toggle behavior.</summary>
+    /// <param name="board">Board instance.</param>
+    /// <returns>None (unit test).</returns>
     [Fact]
     public void Board_FlagCanBeToggled()
     {
@@ -209,7 +228,9 @@ public class MinesweeperTests
         Assert.False(cell?.IsFlagged);
     }
 
-    // Test: Win detection works
+    /// <summary>Tests win detection logic.</summary>
+    /// <param name="board">Board instance.</param>
+    /// <returns>None (unit test).</returns>
     [Fact]
     public void Game_WinDetectionWorks()
     {
@@ -251,7 +272,9 @@ public class MinesweeperTests
         Assert.False(board.CheckWin());
     }
 
-    // Test: Invalid position detection
+    /// <summary>Tests game does not win when cells remain hidden.</summary>
+    /// <param name="board">Board instance.</param>
+    /// <returns>None (unit test).</returns>
     [Fact]
     public void Board_InvalidPositionDetection()
     {
@@ -266,7 +289,9 @@ public class MinesweeperTests
         Assert.False(board.IsValidPosition(10, 10));
     }
 
-    // Test: Move count increments
+    /// <summary>Tests move counter increments correctly.</summary>
+    /// <param name="game">Game instance.</param>
+    /// <returns>None (unit test).</returns>
     [Fact]
     public void Game_MovesCountIncrement()
     {
@@ -279,7 +304,9 @@ public class MinesweeperTests
         Assert.Equal(3, game.MoveCount);
     }
 
-    // Test: Elapsed time increases
+    /// <summary>Tests elapsed time increases during gameplay.</summary>
+    /// <param name="game">Game instance.</param>
+    /// <returns>None (unit test).</returns>
     [Fact]
     public void Game_ElapsedTimeIncreases()
     {
@@ -292,7 +319,9 @@ public class MinesweeperTests
         Assert.True(time2 >= time1);
     }
 
-    // Test: All sizes can be created
+    /// <summary>Tests all board sizes can be created.</summary>
+    /// <param name="board">Board instance.</param>
+    /// <returns>None (unit test).</returns>
     [Fact]
     public void Board_AllSizesCanBeCreated()
     {
@@ -306,8 +335,9 @@ public class MinesweeperTests
         Assert.Equal(16, board16.Size);
     }
 
-    // Test: Revealing a cell twice is safe
-    [Fact]
+    /// <summary>Tests that revealing a cell twice is safe.</summary>
+    /// <param name="board">Board instance.</param>
+    /// <returns>None (unit test).</returns>    [Fact]
     public void Board_RevealingCellTwiceIsIdempotent()
     {
         Board board = new Board(8, 10, 42);
@@ -333,7 +363,9 @@ public class MinesweeperTests
         }
     }
 
-    // Test: Mine count matches
+    /// <summary>Tests mine count matches expected value.</summary>
+    /// <param name="game">Game instance.</param>
+    /// <returns>None (unit test).</returns>
     [Fact]
     public void Game_MineCountMatches()
     {

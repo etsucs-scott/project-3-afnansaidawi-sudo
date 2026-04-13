@@ -2,14 +2,20 @@ using System;
 using System.Collections.Generic;
 using Minesweeper.Core;
 
+/// <summary>Main program entry for Minesweeper console game.</summary>
+
 class Program
 {
+    /// <summary>Starts the application and opens the main menu.</summary>
+    /// <returns>None (application entry point).</returns>
     static void Main()
     {
         MainMenu();
     }
 
-    // Main menu
+    /// <summary>Displays main menu and handles user difficulty selection.</summary>
+    /// <returns>None (runs loop until exit).</returns>
+
     static void MainMenu()
     {
         while (true)
@@ -56,8 +62,11 @@ class Program
             }
         }
     }
+        /// <summary>Starts a new game with selected board size and mine count.</summary>
+        /// <param name="size">Board size (NxN).</param>
+        /// <param name="mineCount">Number of mines.</param>
+        /// <returns>None (starts gameplay loop).</returns>
 
-    // Start a new game with a specific difficulty
     static void PlayGame(int size, int mineCount)
     {
         Console.Clear();
@@ -78,7 +87,8 @@ class Program
         GameLoop(game);
     }
 
-    // Ask the user for a seed number
+    /// <summary>Gets seed value from user or generates random seed.</summary>
+    /// <returns>Integer seed for board generation.</returns>
     static int GetSeed()
     {
         // Prompt the user for a seed
@@ -101,7 +111,9 @@ class Program
         return seedInput.GetHashCode();
     }
 
-    // Main game loop
+    /// <summary>Main gameplay loop until win or loss condition.</summary>
+    /// <param name="game">Active game instance.</param>
+    /// <returns>None (runs until game ends).</returns>    
     static void GameLoop(Game game)
     {
         // Continue looping until the game is over
@@ -154,7 +166,9 @@ class Program
         Console.ReadKey();
     }
 
-    // Display the current board
+            /// <summary>Displays the current board state in console.</summary>
+            /// <param name="game">Active game instance.</param>
+            /// <returns>None (UI display only).</returns>
     static void DisplayBoard(Game game)
     {
         Board board = game.Board;
@@ -190,7 +204,9 @@ class Program
         }
     }
 
-    // Get the appropriate symbol for each cell
+    /// <summary>Returns display symbol for a cell.</summary>
+    /// <param name="cell">Board cell.</param>
+    /// <returns>Symbol representing cell state.</returns>
     static string GetCellSymbol(Cell cell)
     {
         // If the cell is flagged, show 'f'
@@ -213,7 +229,9 @@ class Program
         return ".";
     }
 
-    // Get player move
+        /// <summary>Handles player move input and validation.</summary>
+        /// <param name="game">Active game instance.</param>
+        /// <returns>None (executes move).</returns>
     static void GetPlayerMove(Game game)
     {
         while (true)
@@ -269,7 +287,9 @@ class Program
         }
     }
 
-    // Save the score if we won
+            /// <summary>Saves high score if player wins.</summary>
+            /// <param name="game">Completed game instance.</param>
+            /// <returns>None (writes to file).</returns>
     static void SaveHighScore(Game game)
     {
         // Create a high score entry
@@ -293,7 +313,8 @@ class Program
         }
     }
 
-    // Display high scores
+        /// <summary>Displays high scores table.</summary>
+        /// <returns>None (UI only).</returns>
     static void ViewHighScores()
     {
         Console.Clear();
@@ -314,7 +335,12 @@ class Program
         Console.ReadKey();
     }
 
-    // Display scores for a specific size
+        /// <summary>Displays scores for a specific size.</summary>
+        /// <param name="size">Board size.</param>
+        /// <param name="title">Difficulty title.</param>
+        /// <param name="manager">High score manager.</param>
+        /// <returns>None (UI only).</returns>
+    
     static void DisplayScoresForSize(int size, string title, HighScoreManager manager)
     {
         Console.WriteLine($"─────────────────────────────────────");
